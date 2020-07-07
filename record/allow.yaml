@@ -1,0 +1,7 @@
+# example:
+allow:
+  path:
+    - '/public-vue/common/index.html'
+    - '/zbankws/ws/account/v1/accountStatus'
+    - '/log-collect/front-behaviour'
+    - '/teams'

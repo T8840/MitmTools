@@ -1,0 +1,13 @@
+# examples:
+1:
+  - path: "/zbankws/ws/account/v3/accountInfo"
+  - response: {"succeed":true,"code":"000000","msg":"操作成功","cache":"MISS","data":[{"productCode":"bank","bankName":"银行","baseAcctNo":"XXXXXXXXXXXXX","status":1,"balance":100.76,"name":"T8840","idNo":"110101192006239992","phoneNo":"159****1234","isAddAccountInfo":true,"bankCards":[{"bankCode":"CCB","bankName":"中国建设银行","cardType":"01","cardNo":"621700*********9999","phoneNo":"159****1234","tradeAccount":"XXXXXXXXXXXXXXXXXX","isDefault":true,"dayLimit":4000000.0,"onceLimit":200000.0,"monthLimit":0}],"rechargeStatus":1,"rechargeNoticeMsg":null,"rechargeLimitSource":null,"withdrawStatus":1,"withdrawNoticeMsg":null,"withdrawLimitSource":null,"idCardStatus":0,"expiredStatus":2}]}
+2:
+  - path: "/zbankws/ws/realName/v1/getOcrRecord"
+  - response: {"succeed":true,"code":"000000","msg":"操作成功","cache":"MISS","data":{"name":"T8840","idNo":"110101192006239992","expiryDate":"2029.08.19","issDate":"2009.08.19","serialNo":"000000000000","day":1,"idCardStatus":0}}
+3:
+  - path: "/log-collect/front-behaviour"
+  - response: {"succeed":true,"code":"000000","msg":"操作成功","cache":"MISS","data":[]}
+4:
+  - path: "/tams"
+  - response: {"succeed":true,"code":"000000","msg":"操作成功","cache":"MISS","data":[]}

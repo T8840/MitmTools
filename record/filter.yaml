@@ -1,0 +1,6 @@
+# example:
+ignore:
+  - image: '*.gif/*.jpg/*.png/*.svg/*.img/*.ico/*.jpg!md'
+  - js: '*.js'
+  - css: '*.css/*.scss'
+  - other: '*.ttf/*.otf'

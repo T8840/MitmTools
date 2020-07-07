@@ -1,0 +1,10 @@
+# example:
+allow:
+  path:
+   - '/logCollect'
+  host:
+   - 'xxxx.net'
+
+
+
+
