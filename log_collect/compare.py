@@ -81,6 +81,7 @@ class Rabbit(object):
 class Compare():
 
     def __init__(self):
+        self.record_type= ["GET","POST"][1]
         self.keys = ["etype", "title"]
         # 用户上传的用于检查埋点的文档
         self.u_file = "./record_check.csv"
@@ -102,7 +103,8 @@ class Compare():
                 need_check_data.append(dict(zip(self.keys, value)))
         return need_check_data
 
-    def parseData(self,url):
+    def parseGetData(self,url):
+        """解析Get方法URL中加密数据"""
         pattern = 'content=(.*)&em=eb'
         s = re.compile(pattern).findall(str(url))
         if s:
@@ -117,14 +119,41 @@ class Compare():
                 f.write("{}\n".format(str(result)))
             return result
 
+    def parsePostData(self,content):
+        """解析POST body中content中内容"""
+        pattern = 'content=(.*)&em=n'
+        s = re.compile(pattern).findall(str(content))
+        if s:
+            deContent = s[0]
+            with open(self.f_file, 'a+', encoding='utf-8') as f:
+                f.write("{}\n".format(str(deContent)))
+
+            gkv = GetKeyValue(deContent, mode='s')
+            result = {'etype': gkv.search_key('etype'), 'title': gkv.search_key('title')}
+            print(result)
+            with open(self.s_file, 'a+', encoding='utf-8') as f:
+                f.write("{}\n".format(str(result)))
+            return result
+
     def compare(self,user_values, upload_data):
-        """针对上传数据单条进行比对"""
-        if self.parseData(upload_data) in user_values:
-            print("符合要求的埋点:{}，原始数据为：{}".format(self.parseData(upload_data),upload_data))
+        """针对上传数据单条进行比对,注意要比对的是什么类型的记录数据"""
+        if self.record_type == "GET":
+            if self.parseGetData(upload_data) in user_values:
+                print("符合要求的埋点:{}，原始数据为：{}".format(self.parseGetData(upload_data),upload_data))
+        elif self.record_type == "POST":
+            if self.parsePostData(upload_data) in user_values:
+                print("符合要求的埋点:{}，原始数据为：{}".format(self.parsePostData(upload_data), upload_data))
+        else:
+            raise Exception
 
     def compareDataFromType(self):
         if save_type == "save_file":
-            file = './record_allow_urls.txt'
+            if self.record_type == "GET":
+                file = './record_allow_urls.txt'
+            elif self.record_type == "POST":
+                file = './record_post_contents.txt'
+            else:
+                raise Exception
             with open(file,'r',encoding='utf-8') as f:
                 for url in f.readlines():
                     self.compare(self.getUserValues(), url)
